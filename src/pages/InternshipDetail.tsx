@@ -1,13 +1,13 @@
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { 
-  ExternalLink, 
-  MapPin, 
-  Clock, 
-  Briefcase, 
+import {
+  ExternalLink,
+  MapPin,
+  Clock,
+  Briefcase,
   Calendar,
   Users,
   CheckCircle,
@@ -17,11 +17,37 @@ import {
   Share,
   Bookmark
 } from "lucide-react";
-import { internships } from "@/data/internships";
+import { fetchInternships, Internship } from "@/data/internships";
 
 const InternshipDetail = () => {
   const { id } = useParams();
+  const [internships, setInternships] = useState<Internship[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadInternships = async () => {
+      try {
+        const data = await fetchInternships();
+        setInternships(data);
+      } catch (err) {
+        setError("Failed to load internships");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadInternships();
+  }, []);
+
   const internship = internships.find(i => i.id === id);
+
+  if (loading) {
+    return <div className="container mx-auto px-4 py-16 text-center">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="container mx-auto px-4 py-16 text-center text-red-500">{error}</div>;
+  }
 
   if (!internship) {
     return (

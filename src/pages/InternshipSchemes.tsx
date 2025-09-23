@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,31 +6,56 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Filter, MapPin, Clock, Briefcase, ExternalLink } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { internships } from "@/data/internships";
+import { fetchInternships, Internship } from "@/data/internships";
 
 const InternshipSchemes = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [ministryFilter, setMinistryFilter] = useState("all");
   const [modeFilter, setModeFilter] = useState("all");
   const [levelFilter, setLevelFilter] = useState("all");
-  
+  const [internships, setInternships] = useState<Internship[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadInternships = async () => {
+      try {
+        const data = await fetchInternships();
+        setInternships(data);
+      } catch (err) {
+        setError("Failed to load internships");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadInternships();
+  }, []);
+
   // Get unique ministries for filter
   const ministries = Array.from(new Set(internships.map(i => i.ministry)));
-  
+
   // Filter internships based on search and filters
   const filteredInternships = internships.filter(internship => {
-    const matchesSearch = searchQuery === "" || 
+    const matchesSearch = searchQuery === "" ||
       internship.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       internship.ministry.toLowerCase().includes(searchQuery.toLowerCase()) ||
       internship.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase())) ||
       internship.location.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     const matchesMinistry = ministryFilter === "all" || internship.ministry === ministryFilter;
     const matchesMode = modeFilter === "all" || internship.mode === modeFilter;
     const matchesLevel = levelFilter === "all" || internship.level === levelFilter;
-    
+
     return matchesSearch && matchesMinistry && matchesMode && matchesLevel;
   });
+
+  if (loading) {
+    return <div className="container mx-auto px-4 py-8 text-center">Loading internships...</div>;
+  }
+
+  if (error) {
+    return <div className="container mx-auto px-4 py-8 text-center text-red-500">{error}</div>;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 space-y-8">

@@ -1,50 +1,10 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, MapPin, Clock, MessageSquare, HelpCircle, Bug, Lightbulb } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { saveContactMessage, sendContactEmail } from "@/lib/contact";
+import { max } from "date-fns";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-    category: ""
-  });
-  const { toast } = useToast();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const { name, email, subject, message, category } = formData;
-      const { id } = await saveContactMessage({ name, email, subject, message, category });
-
-      // Fire-and-forget email; don't block UX on email latency
-      sendContactEmail({ name, email, subject, message, category }, "yusufchakki3@gmail.com").catch(() => {});
-
-      toast({
-        title: "Message Sent Successfully!",
-        description: id ? "Your message has been saved and emailed." : "Your message has been saved.",
-      });
-      setFormData({ name: "", email: "", subject: "", message: "", category: "" });
-    } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : "Unknown error";
-      toast({
-        title: "Failed to send message",
-        description: errorMessage,
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
 
   return (
     <div className="space-y-16">
@@ -129,79 +89,17 @@ const Contact = () => {
                   <CardTitle>Contact Form</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-sm font-medium mb-1 block">Full Name *</label>
-                        <Input
-                          required
-                          value={formData.name}
-                          onChange={(e) => handleInputChange("name", e.target.value)}
-                          placeholder="Enter your full name"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium mb-1 block">Email Address *</label>
-                        <Input
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => handleInputChange("email", e.target.value)}
-                          placeholder="Enter your email"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="text-sm font-medium mb-1 block">Query Category</label>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                        {[
-                          { id: "general", label: "General Inquiry", icon: MessageSquare },
-                          { id: "help", label: "Need Help", icon: HelpCircle },
-                          { id: "bug", label: "Report Bug", icon: Bug },
-                          { id: "suggestion", label: "Suggestion", icon: Lightbulb }
-                        ].map(({ id, label, icon: Icon }) => (
-                          <Button
-                            key={id}
-                            type="button"
-                            variant={formData.category === id ? "default" : "outline"}
-                            size="sm"
-                            onClick={() => handleInputChange("category", id)}
-                            className="justify-start"
-                          >
-                            <Icon className="h-4 w-4 mr-1" />
-                            {label}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="text-sm font-medium mb-1 block">Subject *</label>
-                      <Input
-                        required
-                        value={formData.subject}
-                        onChange={(e) => handleInputChange("subject", e.target.value)}
-                        placeholder="Brief description of your query"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="text-sm font-medium mb-1 block">Message *</label>
-                      <Textarea
-                        required
-                        value={formData.message}
-                        onChange={(e) => handleInputChange("message", e.target.value)}
-                        placeholder="Please provide detailed information about your query..."
-                        className="min-h-32"
-                      />
-                    </div>
-
-                    <Button type="submit" size="lg" className="w-full">
-                      <Mail className="h-4 w-4 mr-2" />
-                      Send Message
-                    </Button>
-                  </form>
+                  <iframe
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSeskQgTKjuu_MNomM3ulKIxCMh-fqScmwZCBQSTwVmfi_CZDA/viewform?embedded=true"
+                    width="100%"
+                    style={{ width: "100%", height: "540px" }}
+                    frameBorder={0}
+                    marginHeight={0}
+                    marginWidth={0}
+                    title="Contact Form"
+                  >
+                    Loading...
+                  </iframe>
                 </CardContent>
               </Card>
             </div>

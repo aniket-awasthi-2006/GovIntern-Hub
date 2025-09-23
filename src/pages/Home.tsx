@@ -1,14 +1,39 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, Users, Brain, Shield, TrendingUp, MapPin, Clock, Briefcase } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { internships } from "@/data/internships";
+import { fetchInternships, Internship } from "@/data/internships";
 import heroImage from "@/assets/hero-government-internships.jpg";
 
 const Home = () => {
-  const featuredInternships = internships.slice(0, 3);
+  const [featuredInternships, setFeaturedInternships] = useState<Internship[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadInternships = async () => {
+      try {
+        const data = await fetchInternships();
+        setFeaturedInternships(data.slice(0, 3)); // Take first 3 for featured
+      } catch (err) {
+        setError("Failed to load internships");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadInternships();
+  }, []);
+
+  if (loading) {
+    return <div className="space-y-20 text-center">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="space-y-20 text-center text-red-500">{error}</div>;
+  }
   
   return (
     <div className="space-y-20">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,7 +7,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Brain, Upload, Sparkles, TrendingUp, MapPin, Clock, Briefcase } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { internships } from "@/data/internships";
+import { fetchInternships, Internship } from "@/data/internships";
+
+interface MatchedInternship extends Internship {
+  matchScore: number;
+  matchingSkills: string[];
+}
 
 const AIMatch = () => {
   const [step, setStep] = useState(1);
@@ -20,7 +25,24 @@ const AIMatch = () => {
     location: "",
     experience: ""
   });
-  const [matchResults, setMatchResults] = useState<any[]>([]);
+  const [matchResults, setMatchResults] = useState<MatchedInternship[]>([]);
+  const [internships, setInternships] = useState<Internship[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadInternships = async () => {
+      try {
+        const data = await fetchInternships();
+        setInternships(data);
+      } catch (err) {
+        setError("Failed to load internships");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadInternships();
+  }, []);
 
   const handleProfileSubmit = () => {
     // Simulate AI matching logic
