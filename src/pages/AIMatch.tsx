@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Brain, Upload, Sparkles, TrendingUp, MapPin, Clock, Briefcase } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { fetchInternships, Internship } from "@/data/internships";
+import { useNavigate } from "react-router-dom";
 
 interface MatchedInternship extends Internship {
   matchScore: number;
@@ -15,6 +16,7 @@ interface MatchedInternship extends Internship {
 }
 
 const AIMatch = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [profile, setProfile] = useState({
     name: "",
@@ -82,7 +84,7 @@ const AIMatch = () => {
     setStep(3);
   };
 
-  if (step === 1) {
+   if (step === 1) {
     return (
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="text-center space-y-4 mb-8">
@@ -96,7 +98,8 @@ const AIMatch = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setStep(2)}>
+          {/* 🔹 Redirect to ResumeUpload page */}
+          <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate("/resume-upload")}>
             <CardContent className="pt-6 text-center space-y-4">
               <Upload className="h-16 w-16 text-primary mx-auto" />
               <h3 className="text-xl font-semibold">Upload Resume</h3>
@@ -104,7 +107,7 @@ const AIMatch = () => {
                 Upload your resume and let our AI extract your skills, education, and experience automatically
               </p>
               <Button className="w-full">
-                Upload Resume (PDF/DOC)
+                Upload Resume (PDF Only)
               </Button>
             </CardContent>
           </Card>

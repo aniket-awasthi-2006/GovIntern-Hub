@@ -1,4 +1,3 @@
-# TODO: Fix Firebase Firestore Environment Variables
-
-- [x] Update src/firebase/firestore.ts to use import.meta.env.VITE_* instead of process.env.*
-- [ ] Import db in main.tsx to initialize Firebase on app start
+- [ ] Modify src/pages/ResumeUpload.tsx: Remove handleProfileSubmit call after profile extraction, just navigate to /ai with state
+- [ ] Modify src/pages/AIMatch.tsx: Import useLocation, modify handleProfileSubmit to accept optional profile param, add logic to check location.state and auto-show matches
+- [ ] Test the resume upload to AI match flow

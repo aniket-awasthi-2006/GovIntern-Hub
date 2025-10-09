@@ -13,6 +13,9 @@ import InternshipDetail from "./pages/InternshipDetail";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
+import ResumeUpload from "./pages/ResumeUpload";
+
+
 
 const queryClient = new QueryClient();
 
@@ -34,6 +37,9 @@ const App = () => (
               <Route path="/contact" element={<Contact />} />
               <Route path="/internship/:id" element={<InternshipDetail />} />
               <Route path="*" element={<NotFound />} />
+              <Route path="/" element={<AIMatch />} />
+              <Route path="/resume-upload" element={<ResumeUpload />} />
+
             </Routes>
           </Layout>
         } />
