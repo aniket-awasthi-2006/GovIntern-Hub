@@ -60,7 +60,7 @@ const InternshipSchemes = () => {
   return (
     <div className="container mx-auto px-4 py-8 space-y-8">
       {/* Header */}
-      <div className="text-center space-y-4">
+      <div className="text-center space-y-4 animate-fade-in">
         <h1 className="text-4xl font-bold">Government Internship Schemes</h1>
         <p className="text-lg text-muted-foreground">
           Explore all available government internship opportunities across India
@@ -68,10 +68,10 @@ const InternshipSchemes = () => {
       </div>
 
       {/* Search and Filters */}
-      <div className="bg-card rounded-lg p-6 shadow-sm">
+      <div className="bg-card rounded-lg p-6 shadow-sm animate-scale-in">
         <div className="space-y-4">
           {/* Search Bar */}
-          <div className="relative">
+          <div className="relative focus-expand">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
               placeholder="Search by title, ministry, skills, or location..."
@@ -80,7 +80,7 @@ const InternshipSchemes = () => {
               className="pl-10"
             />
           </div>
-          
+
           {/* Filters */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Select value={ministryFilter} onValueChange={setMinistryFilter}>
@@ -94,7 +94,7 @@ const InternshipSchemes = () => {
                 ))}
               </SelectContent>
             </Select>
-            
+
             <Select value={modeFilter} onValueChange={setModeFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="Work Mode" />
@@ -106,7 +106,7 @@ const InternshipSchemes = () => {
                 <SelectItem value="Hybrid">Hybrid</SelectItem>
               </SelectContent>
             </Select>
-            
+
             <Select value={levelFilter} onValueChange={setLevelFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="Government Level" />
@@ -117,8 +117,8 @@ const InternshipSchemes = () => {
                 <SelectItem value="State">State Government</SelectItem>
               </SelectContent>
             </Select>
-            
-            <Button variant="outline" className="w-full">
+
+            <Button variant="outline" className="w-full hover-scale">
               <Filter className="h-4 w-4 mr-2" />
               More Filters
             </Button>
@@ -127,7 +127,7 @@ const InternshipSchemes = () => {
       </div>
 
       {/* Results Summary */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between animate-fade-in-delay-1">
         <p className="text-muted-foreground">
           Showing {filteredInternships.length} of {internships.length} internships
         </p>
@@ -146,8 +146,8 @@ const InternshipSchemes = () => {
 
       {/* Internship Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredInternships.map((internship) => (
-          <Card key={internship.id} className="hover:shadow-lg transition-shadow">
+        {filteredInternships.map((internship, index) => (
+          <Card key={internship.id} className={`hover-lift animate-stagger-${Math.min(index + 1, 6)}`}>
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="space-y-2">
@@ -171,7 +171,7 @@ const InternshipSchemes = () => {
                 </div>
               </div>
             </CardHeader>
-            
+
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="flex items-center gap-1">
@@ -187,12 +187,12 @@ const InternshipSchemes = () => {
                   <span>{internship.location}</span>
                 </div>
               </div>
-              
+
               <div>
                 <p className="text-sm text-muted-foreground mb-2">Eligibility:</p>
                 <p className="text-sm">{internship.eligibility}</p>
               </div>
-              
+
               <div>
                 <p className="text-sm text-muted-foreground mb-2">Skills Required:</p>
                 <div className="flex flex-wrap gap-1">
@@ -208,19 +208,19 @@ const InternshipSchemes = () => {
                   )}
                 </div>
               </div>
-              
+
               <div className="text-sm">
                 <span className="text-muted-foreground">Deadline: </span>
                 <span className="font-medium text-destructive">
                   {new Date(internship.deadline).toLocaleDateString()}
                 </span>
               </div>
-              
+
               <div className="flex gap-2">
-                <Button asChild size="sm" className="flex-1">
+                <Button asChild size="sm" className="flex-1 hover-scale">
                   <NavLink to={`/internship/${internship.id}`}>View Details</NavLink>
                 </Button>
-                <Button variant="outline" size="sm" asChild>
+                <Button variant="outline" size="sm" asChild className="hover-scale">
                   <a href={internship.applicationLink} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-4 w-4 mr-1" />
                     Apply
@@ -234,18 +234,19 @@ const InternshipSchemes = () => {
 
       {/* No Results */}
       {filteredInternships.length === 0 && (
-        <div className="text-center py-12">
+        <div className="text-center py-12 animate-fade-in">
           <p className="text-lg text-muted-foreground mb-4">
             No internships found matching your criteria
           </p>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={() => {
               setSearchQuery("");
               setMinistryFilter("all");
               setModeFilter("all");
               setLevelFilter("all");
             }}
+            className="hover-scale"
           >
             Clear All Filters
           </Button>

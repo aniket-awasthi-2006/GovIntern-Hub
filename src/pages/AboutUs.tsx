@@ -27,7 +27,7 @@ const AboutUs = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <Card className="text-center">
             <CardContent className="pt-8 space-y-4">
-              <Target className="h-16 w-16 text-primary mx-auto" />
+              <Target className="h-16 w-16 text-primary mx-auto animate-pulse-scale" />
               <h2 className="text-2xl font-bold">Our Mission</h2>
               <p className="text-muted-foreground leading-relaxed">
                 To democratize access to government internship opportunities by creating a transparent, 
@@ -39,7 +39,7 @@ const AboutUs = () => {
 
           <Card className="text-center">
             <CardContent className="pt-8 space-y-4">
-              <Lightbulb className="h-16 w-16 text-primary mx-auto" />
+              <Lightbulb className="h-16 w-16 text-primary mx-auto animate-pulse-scale" />
               <h2 className="text-2xl font-bold">Our Vision</h2>
               <p className="text-muted-foreground leading-relaxed">
                 To become the go-to platform for government internships, empowering millions of students 
@@ -64,7 +64,7 @@ const AboutUs = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardContent className="pt-6 space-y-3">
-                <Shield className="h-12 w-12 text-primary mx-auto" />
+                <Shield className="h-12 w-12 text-primary mx-auto animate-float" />
                 <h3 className="font-semibold">Transparency</h3>
                 <p className="text-sm text-muted-foreground">
                   All opportunities are verified and authentic. No hidden agendas.
@@ -74,7 +74,7 @@ const AboutUs = () => {
 
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardContent className="pt-6 space-y-3">
-                <Users className="h-12 w-12 text-primary mx-auto" />
+                <Users className="h-12 w-12 text-primary mx-auto animate-float" />
                 <h3 className="font-semibold">Accessibility</h3>
                 <p className="text-sm text-muted-foreground">
                   Equal opportunities for students from all backgrounds and regions.
@@ -84,7 +84,7 @@ const AboutUs = () => {
 
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardContent className="pt-6 space-y-3">
-                <Award className="h-12 w-12 text-primary mx-auto" />
+                <Award className="h-12 w-12 text-primary mx-auto animate-float" />
                 <h3 className="font-semibold">Excellence</h3>
                 <p className="text-sm text-muted-foreground">
                   Connecting the best talent with impactful government initiatives.
@@ -94,7 +94,7 @@ const AboutUs = () => {
 
             <Card className="text-center hover:shadow-lg transition-shadow">
               <CardContent className="pt-6 space-y-3">
-                <Heart className="h-12 w-12 text-primary mx-auto" />
+                <Heart className="h-12 w-12 text-primary mx-auto animate-float" />
                 <h3 className="font-semibold">Service</h3>
                 <p className="text-sm text-muted-foreground">
                   Dedicated to serving students and strengthening public service.

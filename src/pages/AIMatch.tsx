@@ -51,35 +51,35 @@ const AIMatch = () => {
     const userSkills = profile.skills.toLowerCase().split(',').map(s => s.trim());
     const matches = internships.map(internship => {
       let score = 0;
-      
+
       // Match skills
-      const matchingSkills = internship.skills.filter(skill => 
-        userSkills.some(userSkill => 
+      const matchingSkills = internship.skills.filter(skill =>
+        userSkills.some(userSkill =>
           skill.toLowerCase().includes(userSkill) || userSkill.includes(skill.toLowerCase())
         )
       );
       score += matchingSkills.length * 20;
-      
+
       // Match location preference
       if (profile.location && internship.location.toLowerCase().includes(profile.location.toLowerCase())) {
         score += 15;
       }
-      
+
       // Match education
       if (profile.degree && internship.eligibility.toLowerCase().includes(profile.degree.toLowerCase())) {
         score += 10;
       }
-      
+
       // Add some randomness for demo
       score += Math.random() * 20;
-      
+
       return {
         ...internship,
         matchScore: Math.min(Math.round(score), 95),
         matchingSkills
       };
     }).sort((a, b) => b.matchScore - a.matchScore);
-    
+
     setMatchResults(matches.slice(0, 6));
     setStep(3);
   };
@@ -87,9 +87,9 @@ const AIMatch = () => {
    if (step === 1) {
     return (
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="text-center space-y-4 mb-8">
+        <div className="text-center space-y-4 mb-8 animate-fade-in">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Brain className="h-8 w-8 text-primary" />
+            <Brain className="h-8 w-8 text-primary animate-pulse-scale" />
             <h1 className="text-4xl font-bold">AI-Powered Internship Matching</h1>
           </div>
           <p className="text-lg text-muted-foreground">
@@ -99,38 +99,38 @@ const AIMatch = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* 🔹 Redirect to ResumeUpload page */}
-          <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => navigate("/resume-upload")}>
+          <Card className="cursor-pointer hover-lift animate-stagger-1" onClick={() => navigate("/resume-upload")}>
             <CardContent className="pt-6 text-center space-y-4">
-              <Upload className="h-16 w-16 text-primary mx-auto" />
+              <Upload className="h-16 w-16 text-primary mx-auto animate-float" />
               <h3 className="text-xl font-semibold">Upload Resume</h3>
               <p className="text-muted-foreground">
                 Upload your resume and let our AI extract your skills, education, and experience automatically
               </p>
-              <Button className="w-full">
+              <Button className="w-full hover-scale animate-pulse-slow">
                 Upload Resume (PDF Only)
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setStep(2)}>
+          <Card className="cursor-pointer hover-lift animate-stagger-2" onClick={() => setStep(2)}>
             <CardContent className="pt-6 text-center space-y-4">
-              <Sparkles className="h-16 w-16 text-primary mx-auto" />
+              <Sparkles className="h-16 w-16 text-primary mx-auto animate-float" />
               <h3 className="text-xl font-semibold">Fill Profile Manually</h3>
               <p className="text-muted-foreground">
                 Provide your details manually for more control over your profile information
               </p>
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full hover-scale">
                 Fill Profile Form
               </Button>
             </CardContent>
           </Card>
         </div>
 
-        <div className="mt-12 text-center space-y-4">
+        <div className="mt-12 text-center space-y-4 animate-fade-in-delay-1">
           <h2 className="text-2xl font-semibold">How AI Matching Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            <div className="text-center space-y-2">
-              <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto font-bold">
+            <div className="text-center space-y-2 animate-stagger-3">
+              <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto font-bold animate-scale-in">
                 1
               </div>
               <h3 className="font-semibold">Analyze Profile</h3>
@@ -138,8 +138,8 @@ const AIMatch = () => {
                 AI analyzes your skills, education, and preferences
               </p>
             </div>
-            <div className="text-center space-y-2">
-              <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto font-bold">
+            <div className="text-center space-y-2 animate-stagger-4">
+              <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto font-bold animate-scale-in">
                 2
               </div>
               <h3 className="font-semibold">Match Algorithms</h3>
@@ -147,8 +147,8 @@ const AIMatch = () => {
                 Advanced algorithms find the best matching internships
               </p>
             </div>
-            <div className="text-center space-y-2">
-              <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto font-bold">
+            <div className="text-center space-y-2 animate-stagger-5">
+              <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto font-bold animate-scale-in">
                 3
               </div>
               <h3 className="font-semibold">Ranked Results</h3>
@@ -165,7 +165,7 @@ const AIMatch = () => {
   if (step === 2) {
     return (
       <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <div className="space-y-6">
+        <div className="space-y-6 animate-fade-in">
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-2">Create Your Profile</h1>
             <p className="text-muted-foreground">
@@ -173,7 +173,7 @@ const AIMatch = () => {
             </p>
           </div>
 
-          <Card>
+          <Card className="animate-scale-in">
             <CardHeader>
               <CardTitle>Personal Information</CardTitle>
             </CardHeader>
@@ -256,10 +256,10 @@ const AIMatch = () => {
               </div>
 
               <div className="flex gap-3 pt-4">
-                <Button variant="outline" onClick={() => setStep(1)} className="flex-1">
+                <Button variant="outline" onClick={() => setStep(1)} className="flex-1 hover-scale">
                   Back
                 </Button>
-                <Button onClick={handleProfileSubmit} className="flex-1">
+                <Button onClick={handleProfileSubmit} className="flex-1 hover-scale animate-pulse-slow">
                   <Brain className="h-4 w-4 mr-2" />
                   Find My Matches
                 </Button>
@@ -274,32 +274,32 @@ const AIMatch = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="space-y-8">
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-4 animate-fade-in">
           <h1 className="text-4xl font-bold">Your AI-Matched Internships</h1>
           <p className="text-lg text-muted-foreground">
             Here are your personalized recommendations based on your profile
           </p>
-          <div className="flex items-center justify-center gap-4">
-            <Badge variant="secondary" className="px-4 py-2">
+          <div className="flex items-center justify-center gap-4 animate-fade-in-delay-1">
+            <Badge variant="secondary" className="px-4 py-2 animate-scale-in">
               <TrendingUp className="h-4 w-4 mr-1" />
               {matchResults.length} Matches Found
             </Badge>
-            <Button variant="outline" onClick={() => setStep(2)}>
+            <Button variant="outline" onClick={() => setStep(2)} className="hover-scale">
               Update Profile
             </Button>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {matchResults.map((internship) => (
-            <Card key={internship.id} className="hover:shadow-lg transition-shadow">
+          {matchResults.map((internship, index) => (
+            <Card key={internship.id} className={`hover-lift animate-stagger-${Math.min(index + 1, 6)}`}>
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
-                      <Badge 
+                      <Badge
                         variant={internship.matchScore >= 80 ? "default" : internship.matchScore >= 60 ? "secondary" : "outline"}
-                        className="text-sm font-bold"
+                        className="text-sm font-bold animate-scale-in"
                       >
                         {internship.matchScore}% Match
                       </Badge>
@@ -316,7 +316,7 @@ const AIMatch = () => {
                   </div>
                 </div>
               </CardHeader>
-              
+
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div className="flex items-center gap-1">
@@ -332,29 +332,29 @@ const AIMatch = () => {
                     <span>{internship.location}</span>
                   </div>
                 </div>
-                
+
                 {internship.matchingSkills && internship.matchingSkills.length > 0 && (
                   <div>
                     <p className="text-sm text-muted-foreground mb-2">Matching Skills:</p>
                     <div className="flex flex-wrap gap-1">
                       {internship.matchingSkills.map((skill: string) => (
-                        <Badge key={skill} variant="default" className="text-xs">
+                        <Badge key={skill} variant="default" className="text-xs animate-scale-in">
                           {skill}
                         </Badge>
                       ))}
                     </div>
                   </div>
                 )}
-                
+
                 <div className="text-sm text-muted-foreground">
                   <p>{internship.description.substring(0, 100)}...</p>
                 </div>
-                
+
                 <div className="flex gap-2">
-                  <Button asChild size="sm" className="flex-1">
+                  <Button asChild size="sm" className="flex-1 hover-scale">
                     <NavLink to={`/internship/${internship.id}`}>View Details</NavLink>
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="hover-scale">
                     Apply Now
                   </Button>
                 </div>
@@ -363,16 +363,16 @@ const AIMatch = () => {
           ))}
         </div>
 
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-4 animate-fade-in-delay-1">
           <h3 className="text-xl font-semibold">Want more matches?</h3>
           <p className="text-muted-foreground">
             Update your profile or skills to discover more relevant opportunities
           </p>
           <div className="flex justify-center gap-4">
-            <Button variant="outline" onClick={() => setStep(2)}>
+            <Button variant="outline" onClick={() => setStep(2)} className="hover-scale">
               Update Profile
             </Button>
-            <Button asChild>
+            <Button asChild className="hover-scale animate-pulse-slow">
               <NavLink to="/internships">Browse All Internships</NavLink>
             </Button>
           </div>
